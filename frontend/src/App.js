@@ -1,0 +1,43 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./components/pages/Home";
+import Master from "./components/layout/Master";
+import About from "./components/pages/About";
+import Courses from "./components/pages/Courses";
+import Contact from "./components/pages/Contact";
+import NotFound from "./components/pages/NotFound";
+import AdminMaster from "./components/layout/admin/AdminMaster";
+import Dashboard from "./components/pages/admin/Dashboard";
+import Register from "./components/pages/Register";
+import Login from "./components/pages/Login";
+import CusDashboard from "./components/pages/customer/CusDashboard";
+import CusMaster from "./components/layout/customer/CusMaster";
+
+function App() {
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Master/>} >
+            <Route path="/" element={<Home/>}/>
+            <Route path="/about" element={<About/>}/>
+            <Route path="/courses" element={<Courses/>}/>
+            <Route path="/contact" element={<Contact/>}/>
+            <Route path="/register" element={<Register/>}/>
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/notfound" element={<NotFound/>}/>
+          </Route>
+
+          <Route path="/admin" element={<AdminMaster/>} >
+            <Route path="/admin" element={<Dashboard/>}/>
+          </Route>
+
+          <Route path="/customer" element={<CusMaster/>}>
+            <Route path="/customer" element={<CusDashboard/>}/>
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+}
+
+export default App;
