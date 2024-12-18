@@ -11,6 +11,9 @@ import Register from "./components/pages/Register";
 import Login from "./components/pages/Login";
 import CusDashboard from "./components/pages/customer/CusDashboard";
 import CusMaster from "./components/layout/customer/CusMaster";
+import ManageSkills from "./components/pages/admin/ManageSkills";
+import UpdateSkills from "./components/pages/admin/UpdateSkills";
+import AddSkills from "./components/pages/admin/AddSkills";
 
 function App() {
   return (
@@ -29,6 +32,9 @@ function App() {
 
           <Route path="/admin" element={<AdminMaster/>} >
             <Route path="/admin" element={<Dashboard/>}/>
+            <Route path="/admin/manageskills" element={<ManageSkills/>}/>
+            <Route path="/admin/updateskills/:id" element={<UpdateSkills/>}/>
+            <Route path="/admin/addskills" element={<AddSkills/>}/>
           </Route>
 
           <Route path="/customer" element={<CusMaster/>}>

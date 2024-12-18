@@ -2,10 +2,12 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 
 export default function Login() {
   var [email, setEmail] = useState("");
   var [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const nav = useNavigate();
 
   const handleform = (e) => {
@@ -16,9 +18,10 @@ export default function Login() {
       password: password,
     };
 
-    console.log(email);
-    console.log(password);
+    // console.log(email);
+    // console.log(password);
 
+    setLoading(true);
     axios
       .post("http://localhost:5000/customer/user/login/", data)
       .then((res) => {
@@ -27,26 +30,39 @@ export default function Login() {
           toast.success(res.data.message);
           sessionStorage.setItem("token", res.data.token);
           sessionStorage.setItem("_id", res.data.data._id);
-          if (res.data.data.userType===1) {
+          if (res.data.data.userType === 1) {
             setTimeout(() => {
+              setLoading(false);
               nav("/admin");
             }, 4000);
           } else {
-            setTimeout(()=>{
+            setTimeout(() => {
+              setLoading(false);
               nav("/customer");
-            },4000)
+            }, 4000);
           }
         } else {
+          setLoading(false);
           toast.error(res.data.message);
         }
       })
       .catch((err) => {
+        setLoading(false);
         console.log(err);
       });
   };
 
   return (
     <>
+      {loading && (
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "100vh" }}
+        >
+          <ClipLoader color="#3498db" loading={loading} size={50} />{" "}
+          {/* Spinner */}
+        </div>
+      )}
       <div className=" container-fluid py-5">
         <div className="conatiner py-3">
           <h1 className="text-center">Log In</h1>
@@ -69,7 +85,7 @@ export default function Login() {
             <div className="form-group">
               <label for="password">Password:</label>
               <input
-                type="text"
+                type="password"
                 className="form-control my-1"
                 id="password"
                 value={password}

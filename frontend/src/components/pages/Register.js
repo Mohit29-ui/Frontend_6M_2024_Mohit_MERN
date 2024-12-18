@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/ReactToastify.css";
+import { ClipLoader } from "react-spinners";
 
 export default function Register() {
   var [name, setName] = useState("");
@@ -11,14 +12,20 @@ export default function Register() {
   var [contact, setContact] = useState("");
   var [address, setAddress] = useState("");
   var [profession, setProfession] = useState("");
+  var [skills, setSkills] = useState("");
   var [emailError, setEmailError] = useState("");
   var [contactError, setContactError] = useState("");
   var [profilePhoto, setProfilePhoto] = useState("");
+  const [loading, setLoading] = useState(false);
+  
   const nav = useNavigate();
+
+  const validDomains = ["gmail.com", "yahoo.com", "hotmail.com", "outlook.com"]; // Add more valid domains as needed
 
   const validateEmail = (email) => {
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailPattern.test(email);
+    const domain = email.split("@")[1];
+    return emailPattern.test(email) && validDomains.includes(domain);
   };
 
   const validateContact = (contact) => {
@@ -30,54 +37,67 @@ export default function Register() {
     console.log("form cannot be submitted empty");
     e.preventDefault();
 
+    let hasError = false;
     if (!validateEmail(email)) {
       setEmailError("Invalid Email");
-      toast.error(emailError);
+      toast.error("Invalid Email");
+      hasError = true;
+    } else {
+      setEmailError("");
     }
     if (!validateContact(contact)) {
       setContactError("Invalid Contact");
-      toast.error(contactError);
-    } 
-    else {
-      let data = new FormData();
-      data.append("name", name);
-      data.append("email", email);
-      data.append("password", password);
-      data.append("contact", contact);
-      data.append("address", address);
-      data.append("profession", profession);
-      data.append("profilePhoto", profilePhoto);
-
-      axios
-        .post("http://localhost:5000/customer/profile/add/", data)
-        .then((res) => {
-          // console.log(res.data);
-          if (res.data.success === true) {
-            toast.success(res.data.message);
-            setTimeout(()=>{
-                nav('/login');
-            },4000)
-          } 
-          else {
-            toast.error(res.data.message);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      toast.error("Invalid Contact");
+      hasError = true;
+    } else {
+      setContactError("");
     }
+    if (hasError) {
+      return;
+    }
+    setLoading(true);
+
+    let data = new FormData();
+    data.append("name", name);
+    data.append("email", email);
+    data.append("password", password);
+    data.append("contact", contact);
+    data.append("address", address);
+    data.append("profession", profession);
+    data.append("skills", skills);
+    data.append("profilePhoto", profilePhoto);
+
+    axios
+      .post("http://localhost:5000/customer/profile/add/", data)
+      .then((res) => {
+        // console.log(res.data);
+        if (res.data.success === true) {
+          toast.success(res.data.message);
+          setTimeout(() => {
+            setLoading(false);
+            nav("/login");
+          }, 3000);
+        } else {
+          setLoading(false);
+          toast.error(res.data.message);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
   };
 
   return (
     <>
+      {loading && (
+        <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+          <ClipLoader color="#3498db" loading={loading} size={50} /> {/* Spinner */}
+        </div>
+      )}
       <div className=" container-fluid py-5">
         <div className="conatiner py-3">
           <h1 className="text-center">Registeration Form</h1>
-          <p className="text-center">If already have an account,
-            <button className="btn btn-primary btn-sm">
-              <Link to="/login" className="text-light">Login</Link>
-            </button>
-          </p>
         </div>
         <div className="container w-50 py-3 mx-auto">
           <form onSubmit={handleform}>
@@ -103,12 +123,12 @@ export default function Register() {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email"
               />
-              {/* <span className="text-danger">{emailError}</span> */}
+              <span className="text-danger">{emailError}</span>
             </div>
             <div className="form-group">
               <label for="password">Password:</label>
               <input
-                type="text"
+                type="password"
                 className="form-control my-1"
                 id="password"
                 value={password}
@@ -126,7 +146,7 @@ export default function Register() {
                 onChange={(e) => setContact(e.target.value)}
                 placeholder="Enter contact no."
               />
-              {/* <span className="text-danger">{contactError}</span> */}
+              <span className="text-danger">{contactError}</span>
             </div>
 
             <div className="form-group">
@@ -152,6 +172,17 @@ export default function Register() {
               />
             </div>
             <div className="form-group">
+              <label for="skills">Skills:</label>
+              <input
+                type="text"
+                className="form-control my-1"
+                id="skills"
+                value={skills}
+                onChange={(e) => setSkills(e.target.value)}
+                placeholder="eg like - CSS, Cooking"
+              />
+            </div>
+            <div className="form-group">
               <label for="profession">Profile Photo</label>
               <input
                 type="file"
@@ -165,6 +196,14 @@ export default function Register() {
                 Register
               </button>
             </div>
+            <p className="text-center">
+              If already have an account? ,
+              <button className="btn btn-primary btn-sm">
+                <Link to="/login" className="text-light">
+                  Login
+                </Link>
+              </button>
+            </p>
           </form>
         </div>
       </div>

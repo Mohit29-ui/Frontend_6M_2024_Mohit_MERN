@@ -56,6 +56,9 @@ export default function CusHeader() {
             <Link to="/contact" className="nav-item nav-link">
               Contact
             </Link>
+            <Link to="/" className="nav-item nav-link d-lg-none d-sm-inline">
+              Log Out
+            </Link>
           </div>
           <Link
             to="/"
