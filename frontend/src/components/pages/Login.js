@@ -30,6 +30,7 @@ export default function Login() {
           toast.success(res.data.message);
           sessionStorage.setItem("token", res.data.token);
           sessionStorage.setItem("_id", res.data.data._id);
+          sessionStorage.setItem("userType", res.data.data.userType);
           if (res.data.data.userType === 1) {
             setTimeout(() => {
               setLoading(false);
