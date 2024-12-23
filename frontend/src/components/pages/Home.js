@@ -1,4 +1,9 @@
+import { useEffect } from "react";
+
 export default function Home() {
+  useEffect(()=>{
+    sessionStorage.clear();
+  })
   return (
     <div>
       <>

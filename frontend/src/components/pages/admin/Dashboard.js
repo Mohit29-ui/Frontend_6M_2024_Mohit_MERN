@@ -1,18 +1,18 @@
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+// import { useEffect } from "react";
+import { Link,  } from "react-router-dom";
 
 export default function Dashboard() {
-  var nav = useNavigate();
-  useEffect(()=>{
-    const token = sessionStorage.getItem("token");
-    const userType = sessionStorage.getItem("userType"); // Assuming userType is stored in sessionStorage
+  // var nav = useNavigate();
+  // useEffect(()=>{
+  //   const token = sessionStorage.getItem("token");
+  //   const userType = sessionStorage.getItem("userType"); // Assuming userType is stored in sessionStorage
 
-    if (!token && userType !== 1) {
-      // Redirect to login or unauthorized page
-      nav("/login"); // Change this to your login route
-      return;
-    }
-  })
+  //   if (!token || userType !== 1) {
+  //     // Redirect to login or unauthorized page
+  //     nav("/login"); // Change this to your login route
+  //     return;
+  //   }
+  // })
   return (
     <>
       {/* Admin Dashboard Start */}

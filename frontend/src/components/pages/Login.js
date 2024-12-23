@@ -1,8 +1,9 @@
-import axios from "axios";
+// import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
+import ApiServices from "../layout/ApiServices";
 
 export default function Login() {
   var [email, setEmail] = useState("");
@@ -22,8 +23,7 @@ export default function Login() {
     // console.log(password);
 
     setLoading(true);
-    axios
-      .post("http://localhost:5000/customer/user/login/", data)
+    ApiServices.Login(data)
       .then((res) => {
         console.log(res.data);
         if (res.data.success === true) {
