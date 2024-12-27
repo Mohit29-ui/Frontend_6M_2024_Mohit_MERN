@@ -4,7 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import ApiServices from "../../layout/ApiServices";
 
-export default function ManageSkills() {
+export default function ManageUsers() {
   var [data, setData] = useState([]);
   var [refresh, setRefresh] = useState("");
   const [loading, setLoading] = useState(true);
@@ -20,9 +20,9 @@ export default function ManageSkills() {
       return;
     }
 
-    ApiServices.AllSkills()
+    ApiServices.AllUsers()
       .then((res) => {
-        // console.log(res);
+        console.log(res.data);
         setData(res?.data?.data);
         setLoading(false);
       })
@@ -44,12 +44,11 @@ export default function ManageSkills() {
       _id: id,
       status: newStatus,
     };
-    setLoading(true);
-    ApiServices.DeleteSkill(data)
+    ApiServices.ChangeStatus(data)
       .then((res) => {
         // console.log(res);
         if (res.data.success === true) {
-          toast.success("Status changed");
+          toast.success(res.data.message);
           setLoading(true);
           setRefresh((prev) => !prev);
           setData((prevData) => {
@@ -91,29 +90,26 @@ export default function ManageSkills() {
             <Link to="/admin">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link to="/admin/manageskills">Manage Skills</Link>
-          </li>
-          <li className="breadcrumb-item">
-            <Link to="/admin/addskills">Add Skills</Link>
+            <Link to="/admin/manageusers">Manage Users</Link>
           </li>
         </ol>
       </nav>
       {/* Breadcrumb end */}
-      
-      <div className="container-fluid about py-3">
+      {/* header end */}
+      <div className="container-fluid about py-5">
         <div className="container py-3">
           <div className="row g-5 align-items-center">
             <div className="col-sm-10 mx-auto">
               <ToastContainer />
-              <table className="table table-bordered border-secondary-subtle table-striped">
-                <thead className="table-secondary border-secondary">
-                  <tr className="text-center">
+              <table className="table table-bordered text-start table-striped">
+                <thead className="table-secondary text-center">
+                  <tr>
                     <th>Srno</th>
                     <th>Name</th>
-                    <th>Technology</th>
-                    <th>Description</th>
-                    <th>Duration</th>
-                    <th>Image</th>
+                    <th>Email</th>
+                    <th>Contact</th>
+                    <th>Profession</th>
+                    <th>ProfilePhoto</th>
                     <th>Status</th>
                     <th>Action</th>
                     <th>Change status</th>
@@ -125,12 +121,12 @@ export default function ManageSkills() {
                       <tr>
                         <td>{index + 1}</td>
                         <td>{el.name}</td>
-                        <td>{el.technology}</td>
-                        <td>{el.description}</td>
-                        <td>{el.duration}</td>
+                        <td>{el.email}</td>
+                        <td>{el.contact}</td>
+                        <td>{el.profession}</td>
                         <td>
                           <img
-                            src={"http://localhost:5000/" + el.thumbnail}
+                            src={"http://localhost:5000/" + el.profilePhoto}
                             alt={el.name}
                             // style={{height:"150px",width:"250px"}}
                             className="w-50 h-50"
@@ -138,18 +134,21 @@ export default function ManageSkills() {
                         </td>
                         <td>
                           {el.status ? (
-                            <span className="text-success">Active</span>
+                            <span className="text-success ">
+                              Active
+                            </span>
                           ) : (
-                            <span className="text-danger">Inactive</span>
+                            <span className="text-danger ">
+                              Inactive
+                            </span>
                           )}
                         </td>
                         <td>
                           <button className="btn btn-sm btn-primary">
-                            <Link
-                              className="text-light text-decoration-none"
-                              to={"/admin/updateskills/" + el._id}
+                            <Link className="text-light text-decoration-none"
+                              to={"/admin/viewuser/" + el._id}
                             >
-                              Edit
+                              View
                             </Link>
                           </button>
                         </td>

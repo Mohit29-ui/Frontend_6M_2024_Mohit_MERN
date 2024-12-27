@@ -14,6 +14,9 @@ import CusMaster from "./components/layout/customer/CusMaster";
 import ManageSkills from "./components/pages/admin/ManageSkills";
 import UpdateSkills from "./components/pages/admin/UpdateSkills";
 import AddSkills from "./components/pages/admin/AddSkills";
+import ChangePassword from "./components/pages/ChangePassword";
+import ManageUsers from "./components/pages/admin/ManageUsers";
+import ViewUser from "./components/pages/admin/ViewUser";
 
 function App() {
   return (
@@ -27,6 +30,7 @@ function App() {
             <Route path="/contact" element={<Contact/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/login" element={<Login/>}/>
+            <Route path="/changepassword" element={<ChangePassword/>}/>
             <Route path="/notfound" element={<NotFound/>}/>
           </Route>
 
@@ -35,6 +39,8 @@ function App() {
             <Route path="/admin/manageskills" element={<ManageSkills/>}/>
             <Route path="/admin/updateskills/:id" element={<UpdateSkills/>}/>
             <Route path="/admin/addskills" element={<AddSkills/>}/>
+            <Route path="/admin/manageusers" element={<ManageUsers/>}/>
+            <Route path="/admin/viewuser/:id" element={<ViewUser/>}/>
           </Route>
 
           <Route path="/customer" element={<CusMaster/>}>

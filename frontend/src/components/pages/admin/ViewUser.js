@@ -1,0 +1,140 @@
+import { useEffect, useState } from "react";
+import { ClipLoader } from "react-spinners";
+import { Link, useParams } from "react-router-dom";
+import ApiServices from "../../layout/ApiServices";
+import { ToastContainer } from "react-toastify";
+
+export default function ViewUser() {
+  var [data, setData] = useState("");
+  var [paidSkills, setPaidSkills] = useState("");
+  const [loading, setLoading] = useState(true);
+  const params = useParams();
+  //   console.log("params is ", params.id);
+  var _id = params.id;
+
+  useEffect(() => {
+    let data = {
+      _id: _id,
+    };
+
+    ApiServices.ViewUser(data)
+      .then((res) => {
+        // console.log(res.data);
+        setData(res?.data?.data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+
+    ApiServices.PaidSkill()
+      .then((res) => {
+        console.log(res?.data);
+        setPaidSkills(res?.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  return (
+    <>
+      {loading && (
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "100vh" }}
+        >
+          <ClipLoader color="#3498db" loading={loading} size={50} />{" "}
+          {/* Spinner */}
+        </div>
+      )}
+      {/* Breadcrumb start */}
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb bg-secondary-subtle py-4 fs-4 d-flex justify-content-center">
+          <li className="breadcrumb-item">
+            <Link to="/admin">Home</Link>
+          </li>
+          <li className="breadcrumb-item">
+            <Link to="/admin/manageusers">Manage Users</Link>
+          </li>
+          <li className="breadcrumb-item">
+            <Link to={"/admin/viewuser/" + _id}>View User</Link>
+          </li>
+        </ol>
+      </nav>
+      {/* Breadcrumb end */}
+      <div className="container-fluid py-3">
+        <div
+          className="card py-4 px-1 shadow mx-auto"
+          style={{ width: "18rem" }}
+        >
+          <img
+            src={"http://localhost:5000/" + data.profilePhoto}
+            className="card-img-top"
+            alt={data.name}
+          />
+          <div className="card-body">
+            <h5 className="card-title">{data.name}</h5>
+            <p className="card-text">
+              <span>{"+91 " + data.contact}</span>
+              <div className="d-flex flex-column">
+                <span className="fs-4">Skills</span>
+                <span className="btn btn-primary my-2">
+                  <Link
+                    to={"/admin/freeskills" + _id}
+                    className="text-light nav-link"
+                  >
+                    FreeSkills
+                  </Link>
+                </span>
+                <span className="btn btn-primary my-2">
+                  <Link
+                    to={"/admin/paidskills" + _id}
+                    className="text-light nav-link"
+                  >
+                    PaidSkills
+                  </Link>
+                </span>
+              </div>
+            </p>
+          </div>
+        </div>
+      </div>
+      {/* card end */}
+      <div className="container-fluid about py-3">
+        <div className="container py-3">
+          <div className="row g-5 align-items-center">
+            <div className="col-sm-10 mx-auto">
+              <ToastContainer />
+              <table className="table table-bordered border-secondary-subtle table-striped">
+                <thead className="table-secondary border-secondary">
+                  <tr className="text-center">
+                    <th>Srno</th>
+                    <th>Name</th>
+                    <th>Technology</th>
+                    <th>Description</th>
+                    <th>Duration</th>
+                    <th>Image</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    paidSkills?.data?.filter().map((el,index)=>{
+                      return(
+                        <tr>
+                          <td>{index+1}</td>
+
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
-import axios from "axios";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import ApiServices from "../../layout/ApiServices";
 
 export default function UpdateSkills() {
   var [name, setName] = useState("");
@@ -30,10 +30,7 @@ export default function UpdateSkills() {
     data.append("duration", duration);
     data.append("thumbnail", thumbnail);
 
-    axios
-      .post("http://localhost:5000/admin/skill/update", data,
-        {headers: { Authorization: sessionStorage.getItem("token") }}
-      )
+    ApiServices.UpdateSkills(data)
       .then((res) => {
         // console.log(res.data);
         if (res.data.success === true) {
@@ -64,10 +61,22 @@ export default function UpdateSkills() {
           {/* Spinner */}
         </div>
       )}
-      <div className="container-fluid py-5">
-        <div className="container py-3">
-          <h1 className="text-center mb-4">Update Skill</h1>
-        </div>
+      {/* Breadcrumb start */}
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb bg-secondary-subtle py-4 fs-4 d-flex justify-content-center">
+          <li className="breadcrumb-item">
+            <Link to="/admin">Home</Link>
+          </li>
+          <li className="breadcrumb-item">
+            <Link to="/admin/manageskills">Manage Skills</Link>
+          </li>
+          <li className="breadcrumb-item">
+            <Link to={"/admin/updateskills/"+_id}>Update Skills</Link>
+          </li>
+        </ol>
+      </nav>
+      {/* Breadcrumb end */}
+      <div className="container-fluid py-3">
         <div className="container w-50 py-3 mx-auto">
           <form onSubmit={handleform}>
             <ToastContainer />

@@ -1,13 +1,14 @@
 // import axios from "axios";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
 import ApiServices from "../layout/ApiServices";
 
-export default function Login() {
+export default function ChangePassword() {
   var [email, setEmail] = useState("");
-  var [password, setPassword] = useState("");
+  var [oldPassword, setOldPassword] = useState("");
+  var [newPassword, setNewPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const nav = useNavigate();
 
@@ -16,33 +17,26 @@ export default function Login() {
 
     let data = {
       email: email,
-      password: password,
+      oldPassword: oldPassword,
+      newPassword: newPassword,
     };
+
     // console.log(email);
     // console.log(password);
+
     setLoading(true);
-    ApiServices.Login(data)
+    ApiServices.ChangePassword(data)
       .then((res) => {
         console.log(res.data);
         if (res.data.success === true) {
+          setLoading(true);
           toast.success(res.data.message);
-          sessionStorage.setItem("token", res.data.token);
-          sessionStorage.setItem("_id", res.data.data._id);
-          sessionStorage.setItem("userType", res.data.data.userType);
-          if (res.data.data.userType === 1) {
-            setTimeout(() => {
-              setLoading(false);
-              nav("/admin");
-            }, 4000);
-          } else {
-            setTimeout(() => {
-              setLoading(false);
-              nav("/customer");
-            }, 4000);
-          }
+          setTimeout(()=>{
+            nav("/login");
+          },2000)
         } else {
+          toast.error(res?.data?.message)
           setLoading(false);
-          toast.error(res.data.message);
         }
       })
       .catch((err) => {
@@ -63,11 +57,10 @@ export default function Login() {
         </div>
       )}
       <div className=" container-fluid py-5">
-        <div className="container w-50 border border-rounded bg-secondary-subtle rounded-3">
         <div className="conatiner py-3">
-          <h1 className="text-center text-primary">Log In</h1>
+          <h1 className="text-center">Change Password</h1>
         </div>
-        <div className="container w-75 py-3 mx-auto">
+        <div className="container w-50 py-3 mx-auto">
           <form onSubmit={handleform}>
             <ToastContainer />
             <div className="form-group">
@@ -83,27 +76,35 @@ export default function Login() {
               {/* <span className="text-danger">{emailError}</span> */}
             </div>
             <div className="form-group">
-              <label for="password">Password:</label>
+              <label for="oldpassword">Old Password:</label>
               <input
                 type="password"
                 className="form-control my-1"
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter Password"
+                id="oldpassword"
+                value={oldPassword}
+                onChange={(e) => setOldPassword(e.target.value)}
+                placeholder="Enter Old Password"
               />
             </div>
 
             <div className="form-group">
-              <button type="submit" className="btn btn-primary my-2 py-2">
-                Login
+              <label for="oldpassword">New Password:</label>
+              <input
+                type="password"
+                className="form-control my-1"
+                id="newpassword"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Set New Password"
+              />
+            </div>
+
+            <div className="form-group">
+              <button type="submit" className="btn btn-primary">
+                Change Password
               </button>
             </div>
-            <p className="text-center text-info ">
-              <Link to="/changepassword">Forgot password?</Link>
-            </p>
           </form>
-        </div>
         </div>
       </div>
     </>

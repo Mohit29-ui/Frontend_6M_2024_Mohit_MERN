@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { ClipLoader } from "react-spinners";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ApiServices from "../../layout/ApiServices";
 
 export default function AddSkills() {
   var [name, setName] = useState("");
@@ -26,10 +26,7 @@ export default function AddSkills() {
     data.append("duration", duration);
     data.append("thumbnail", thumbnail);
 
-    axios
-      .post("http://localhost:5000/admin/skill/add", data,
-        {headers: { Authorization: sessionStorage.getItem("token") }}
-      )
+    ApiServices.AddSkills(data)
       .then((res) => {
         // console.log(res.data);
         if (res.data.success === true) {
@@ -60,10 +57,22 @@ export default function AddSkills() {
           {/* Spinner */}
         </div>
       )}
+      {/* Breadcrumb start */}
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb bg-secondary-subtle py-4 fs-4 d-flex justify-content-center">
+          <li className="breadcrumb-item">
+            <Link to="/admin">Home</Link>
+          </li>
+          <li className="breadcrumb-item">
+            <Link to="/admin/manageskills">Manage Skills</Link>
+          </li>
+          <li className="breadcrumb-item">
+            <Link to="/admin/addskills">Add Skills</Link>
+          </li>
+        </ol>
+      </nav>
+      {/* Breadcrumb end */}
       <div className="container-fluid py-5">
-        <div className="container py-3">
-          <h1 className="text-center mb-4">Add Skill</h1>
-        </div>
         <div className="container w-50 py-3 mx-auto">
           <form onSubmit={handleform}>
             <ToastContainer />
@@ -124,7 +133,7 @@ export default function AddSkills() {
             </div>
             <div className="form-group">
               <button type="submit" className="btn btn-primary btn-block">
-                Update Skill
+                Add Skill
               </button>
             </div>
           </form>

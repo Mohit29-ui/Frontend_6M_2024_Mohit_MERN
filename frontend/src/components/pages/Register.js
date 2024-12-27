@@ -102,7 +102,7 @@ export default function Register() {
       <div className=" container-fluid py-5">
         <div className="container w-50 border border-rounded bg-secondary-subtle rounded-3">
           <div className="conatiner py-3 w-75 mx-auto">
-            <h1 className="text-center text-white bg-primary rounded-2 py-1 w-75 mx-auto">Registration Form</h1>
+            <h1 className="text-center text-primary rounded-2 py-1 w-75 mx-auto">Registration Form</h1>
           </div>
           <div className="container w-75 py-3 mx-auto ">
             <form onSubmit={handleform}>

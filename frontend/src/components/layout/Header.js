@@ -61,7 +61,7 @@ export default function Header() {
             to="/register"
             className="btn btn-primary py-4 px-lg-5 d-none d-lg-block"
           >
-            Join Now
+            Register/Login
             <i className="fa fa-arrow-right ms-3" />
           </Link>
         </div>
