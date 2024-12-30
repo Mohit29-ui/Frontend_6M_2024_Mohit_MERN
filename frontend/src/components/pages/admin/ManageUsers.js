@@ -146,7 +146,7 @@ export default function ManageUsers() {
                         <td>
                           <button className="btn btn-sm btn-primary">
                             <Link className="text-light text-decoration-none"
-                              to={"/admin/viewuser/" + el._id}
+                              to={"/admin/viewuser/" + el._id +"/"+el.userId._id}
                             >
                               View
                             </Link>

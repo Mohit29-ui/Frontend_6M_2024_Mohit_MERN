@@ -40,7 +40,7 @@ function App() {
             <Route path="/admin/updateskills/:id" element={<UpdateSkills/>}/>
             <Route path="/admin/addskills" element={<AddSkills/>}/>
             <Route path="/admin/manageusers" element={<ManageUsers/>}/>
-            <Route path="/admin/viewuser/:id" element={<ViewUser/>}/>
+            <Route path="/admin/viewuser/:id/:userid" element={<ViewUser/>}/>
           </Route>
 
           <Route path="/customer" element={<CusMaster/>}>
