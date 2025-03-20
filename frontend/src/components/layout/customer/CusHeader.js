@@ -33,26 +33,6 @@ export default function CusHeader() {
             <Link to="/courses" className="nav-item nav-link">
               Courses
             </Link>
-            <div className="nav-item dropdown">
-              <Link
-                to="/"
-                className="nav-link dropdown-toggle"
-                data-bs-toggle="dropdown"
-              >
-                Pages
-              </Link>
-              <div className="dropdown-menu fade-down m-0">
-                <Link to="/team" className="dropdown-item">
-                  Our Team
-                </Link>
-                <Link to="/testimonial" className="dropdown-item">
-                  Testimonial
-                </Link>
-                <Link to="404.html" className="dropdown-item">
-                  404 Page
-                </Link>
-              </div>
-            </div>
             <Link to="/contact" className="nav-item nav-link">
               Contact
             </Link>

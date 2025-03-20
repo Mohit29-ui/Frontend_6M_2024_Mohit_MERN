@@ -2,25 +2,22 @@ import { useEffect, useState } from "react";
 import { ClipLoader } from "react-spinners";
 import { Link, useParams } from "react-router-dom";
 import ApiServices from "../../layout/ApiServices";
-import { ToastContainer } from "react-toastify";
 
 export default function ViewUser() {
-  var [data, setData] = useState("");
-  var [paidSkills, setPaidSkills] = useState("");
+  var [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const params = useParams();
   //   console.log("params is ", params.id);
-  var _id = params.id;
-  var userid = params.userid;
+  var id = params.id;
 
   useEffect(() => {
     let data = {
-      _id: _id,
+      _id: id,
     };
 
     ApiServices.ViewUser(data)
       .then((res) => {
-        // console.log(res.data);
+        console.log(res.data.data);
         setData(res?.data?.data);
         setLoading(false);
       })
@@ -28,16 +25,7 @@ export default function ViewUser() {
         setLoading(false);
         console.log(err);
       });
-
-    ApiServices.PaidSkill()
-      .then((res) => {
-        console.log(res?.data);
-        setPaidSkills(res?.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  }, [id]);
 
   return (
     <>
@@ -60,7 +48,7 @@ export default function ViewUser() {
             <Link to="/admin/manageusers">Manage Users</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link to={"/admin/viewuser/" + _id+"/"+userid}>View User</Link>
+            <Link className="text-decoration-none text-secondary" to={"/admin/viewuser/" + id}>View User</Link>
           </li>
         </ol>
       </nav>
@@ -83,7 +71,7 @@ export default function ViewUser() {
                 <span className="fs-4">Skills</span>
                 <span className="btn btn-primary my-2">
                   <Link
-                    to="#freeskill"
+                    to={data.userId ? `/admin/viewfreeskill/${id}/${data.userId._id}` :`/admin/viewuser/${id}`}
                     className="text-light nav-link"
                   >
                     FreeSkills
@@ -91,7 +79,7 @@ export default function ViewUser() {
                 </span>
                 <span className="btn btn-primary my-2">
                   <Link
-                    to="#pskill"
+                    to={data.userId ? `/admin/viewpaidskill/${id}/${data.userId._id}` :`/admin/viewuser/${id}`}
                     className="text-light nav-link"
                   >
                     PaidSkills
@@ -103,84 +91,6 @@ export default function ViewUser() {
         </div>
       </div>
       {/* card end */}
-      <div className="container-fluid about py-3">
-        <div className="container py-3">
-          <div className="row g-5 align-items-center">
-            <div className="col-sm-10 mx-auto">
-              <ToastContainer />
-              <table id="freeskill" className="table table-bordered border-secondary-subtle table-striped">
-                <thead className="table-secondary border-secondary">
-                  <tr className="text-center">
-                    <th>Srno</th>
-                    <th>Name</th>
-                    <th>Technology</th>
-                    <th>Description</th>
-                    <th>Duration</th>
-                    <th>Thumbnail</th>
-                    <th>Created By</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {paidSkills?.data?.filter(el => el.userId._id===userid).map((el, index) => {
-                      return (
-                        <tr>
-                          <td>{index + 1}</td>
-                          <td>{el.name}</td>
-                          <td>{el.technology}</td>
-                          <td>{el.description}</td>
-                          <td>{el.duration}</td>
-                          <td>
-                            <img
-                              src={"http://localhost:5000/" + el.thumbnail}
-                              alt={el.name}
-                            />
-                          </td>
-                          <td>{el.userId.email}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            </div>
-            <div className="col-sm-10 mx-auto">
-              <ToastContainer />
-              <table id="pskill" className="table table-bordered border-secondary-subtle table-striped">
-                <thead className="table-secondary border-secondary">
-                  <tr className="text-center">
-                    <th>Srno</th>
-                    <th>Name</th>
-                    <th>Technology</th>
-                    <th>Description</th>
-                    <th>Duration</th>
-                    <th>Thumbnail</th>
-                    <th>Created By</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {paidSkills?.data?.filter(el => el.userId._id===userid).map((el, index) => {
-                      return (
-                        <tr>
-                          <td>{index + 1}</td>
-                          <td>{el.name}</td>
-                          <td>{el.technology}</td>
-                          <td>{el.description}</td>
-                          <td>{el.duration}</td>
-                          <td>
-                            <img
-                              src={"http://localhost:5000/" + el.thumbnail}
-                              alt={el.name}
-                            />
-                          </td>
-                          <td>{el.userId.email}</td>
-                        </tr>
-                      );
-                    })}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
     </>
   );
 }

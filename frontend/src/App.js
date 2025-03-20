@@ -17,6 +17,9 @@ import AddSkills from "./components/pages/admin/AddSkills";
 import ChangePassword from "./components/pages/ChangePassword";
 import ManageUsers from "./components/pages/admin/ManageUsers";
 import ViewUser from "./components/pages/admin/ViewUser";
+import ViewFreeSkill from "./components/pages/admin/ViewFreeSkill";
+import ViewPaidSkill from "./components/pages/admin/ViewPaidSkill";
+import Requests from "./components/pages/admin/Requests";
 
 function App() {
   return (
@@ -40,7 +43,10 @@ function App() {
             <Route path="/admin/updateskills/:id" element={<UpdateSkills/>}/>
             <Route path="/admin/addskills" element={<AddSkills/>}/>
             <Route path="/admin/manageusers" element={<ManageUsers/>}/>
-            <Route path="/admin/viewuser/:id/:userid" element={<ViewUser/>}/>
+            <Route path="/admin/viewuser/:id" element={<ViewUser/>}/>
+            <Route path="/admin/viewfreeskill/:id/:userid" element={<ViewFreeSkill/>}/>
+            <Route path="/admin/viewpaidskill/:id/:userid" element={<ViewPaidSkill/>}/>
+            <Route path="/admin/managerequests" element={<Requests/>}/>
           </Route>
 
           <Route path="/customer" element={<CusMaster/>}>

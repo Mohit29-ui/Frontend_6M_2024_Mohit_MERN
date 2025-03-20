@@ -90,7 +90,7 @@ export default function ManageUsers() {
             <Link to="/admin">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link to="/admin/manageusers">Manage Users</Link>
+            <Link className="text-decoration-none text-secondary" to="/admin/manageusers">Manage Users</Link>
           </li>
         </ol>
       </nav>
@@ -146,7 +146,7 @@ export default function ManageUsers() {
                         <td>
                           <button className="btn btn-sm btn-primary">
                             <Link className="text-light text-decoration-none"
-                              to={"/admin/viewuser/" + el._id +"/"+el.userId._id}
+                              to={"/admin/viewuser/" + el._id}
                             >
                               View
                             </Link>

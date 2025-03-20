@@ -33,12 +33,12 @@ export default function Login() {
             setTimeout(() => {
               setLoading(false);
               nav("/admin");
-            }, 4000);
+            }, 2000);
           } else {
             setTimeout(() => {
               setLoading(false);
               nav("/customer");
-            }, 4000);
+            }, 2000);
           }
         } else {
           setLoading(false);

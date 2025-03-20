@@ -49,7 +49,7 @@ class ApiServices{
     FreeSkillSingle(data){
         return axios.post(BaseUrl+"admin/freeskill/single",data,{headers:this.getToken()})
     }
-    PaidSkill(){
+    PaidSkillAll(){
         return axios.post(BaseUrl+"admin/paidskill/all",null,{headers:this.getToken()})
     }
     SinglePaidSkill(data){

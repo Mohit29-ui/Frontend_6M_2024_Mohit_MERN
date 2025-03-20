@@ -1,4 +1,18 @@
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 export default function CusDashboard() {
+  var nav = useNavigate();
+  useEffect(() => {
+      const token = sessionStorage.getItem("token");
+      const userType = sessionStorage.getItem("userType"); // Assuming userType is stored in sessionStorage
+  
+      if (!token || userType !== "2") {
+        // Redirect to login
+        nav("/login"); // Change this to your login route
+        return;
+      }
+    }, [nav]);
   return (
     <>
       {/* User Dashboard Start */}

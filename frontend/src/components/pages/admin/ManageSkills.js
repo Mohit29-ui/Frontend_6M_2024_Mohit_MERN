@@ -91,7 +91,7 @@ export default function ManageSkills() {
             <Link to="/admin">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link to="/admin/manageskills">Manage Skills</Link>
+            <Link className="text-decoration-none text-secondary" to="/admin/manageskills">Manage Skills</Link>
           </li>
           <li className="breadcrumb-item">
             <Link to="/admin/addskills">Add Skills</Link>

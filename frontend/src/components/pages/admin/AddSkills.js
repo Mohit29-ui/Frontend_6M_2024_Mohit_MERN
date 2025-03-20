@@ -67,14 +67,14 @@ export default function AddSkills() {
             <Link to="/admin/manageskills">Manage Skills</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link to="/admin/addskills">Add Skills</Link>
+            <Link className="text-decoration-none text-secondary" to="/admin/addskills">Add Skills</Link>
           </li>
         </ol>
       </nav>
       {/* Breadcrumb end */}
       <div className="container-fluid py-5">
-        <div className="container w-50 py-3 mx-auto">
-          <form onSubmit={handleform}>
+        <div className="container w-50 py-5 mx-auto bg-secondary-subtle rounded-4">
+          <form className="w-75 mx-auto" onSubmit={handleform}>
             <ToastContainer />
             <div className="form-group">
               <label htmlFor="name">Name:</label>
@@ -132,7 +132,7 @@ export default function AddSkills() {
               />
             </div>
             <div className="form-group">
-              <button type="submit" className="btn btn-primary btn-block">
+              <button type="submit" className="btn btn-primary btn-block py-2 my-2">
                 Add Skill
               </button>
             </div>
